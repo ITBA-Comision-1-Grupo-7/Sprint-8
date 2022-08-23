@@ -1,0 +1,15 @@
+body{
+    background-image:url("../img/fondo.jpeg");
+    
+   
+}
+.container{
+    max-width: 30em;
+    margin-top: 3em;
+    font-family: "Gill Sans", sans-serif; 
+}
+input{
+    margin-top: 0.5em;
+}
+
+

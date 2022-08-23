@@ -1,0 +1,42 @@
+{% extends 'utils/base.html' %}
+
+{% load static %}
+
+{% block styles %} <link rel="stylesheet" href="{% static 'login/css/styles.css' %}"> {% endblock %}
+{% block title %} Login {% endblock %}
+
+
+{% block content %}
+
+<h1>Bienvenido a ITBANK </h1>
+<div class="img_prin">
+    {% load static %}
+    <img class = 'w-75' src="{% static 'login/img/interna-homebanking.jpg' %}">
+</div>
+
+<div class="carrusel">
+    <div id="carouselExampleControls" class="carousel slide w-50" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="../../static/login/img/imagen_de_fondo.jpg" class="d-block w-100 car_img" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../static/login/img/ty.jpg" class="d-block w-50 car_img" alt="...">
+          </div>
+          <div class="carousel-item">
+            <img src="../../static/login/img/fondo2.jpg" class="d-block w-50 car_img" alt="...">
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+
+</div>
+
+{% endblock %}

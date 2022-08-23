@@ -1,0 +1,68 @@
+:root {
+
+    --bs-blue: #8ABBD6;
+    --bs-gray-dark: #515e6b;
+    --light: #ffffff;
+    --bs-dark: #56595f; 
+    
+}
+
+
+body {
+  font-family: "League Spartan", sans-serif;
+  font-weight: 300;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-image:url('../img/fondo.jpg');
+ 
+}
+
+.bg-bs-blue {
+  background-color: var(--bs-blue);
+}
+
+.form-control, .btn {
+    min-height:  3.125rem;
+    line-height: initial;
+}
+
+.bg-dark {
+    background-color: var(--bs-dark)
+}
+
+.btn { 
+    background-color:  #1690d1;
+   
+}
+
+.btn:hover {
+    background-color: #265baf;
+    transition: all ease 0.3s;
+}
+
+h1{
+    text-align: center;
+    margin: 1em;
+}
+
+.carrusel{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1em;
+}
+
+.img_prin{
+    display: flex;
+    margin: 2em;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.carrusel .car_img{
+    width: 900px;
+    max-width: 100%;
+}
+
+

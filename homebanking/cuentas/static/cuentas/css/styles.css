@@ -1,0 +1,21 @@
+#front-titulo{
+    text-align: center;
+    font-size: 38px;
+    color: #0D77AF;
+    
+}
+#titulo{
+    font-size: 20px;
+    font-weight: bold;
+}
+#tarjetaLast{
+    text-align: center;
+}
+.imagen_visa {
+    height: 50em;
+}
+
+
+#title_Seccion_Card{
+    color:#0D77AF ;
+}

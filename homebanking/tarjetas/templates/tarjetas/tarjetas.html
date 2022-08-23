@@ -1,0 +1,34 @@
+{% extends 'utils/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'prestamos/css/styles.css' %}" />
+{%endblock %} {%block content %} {% if enviado and flag %}
+<div class="col-lg-8 col-md-10 mx-auto">
+  <p><b>Gracias {{enviado}} !</b></p>
+  <p>
+    <b>
+      Tu tarjeta fue solitada con éxito, si todo salio bien recibira su tarjeta pronto!</b>
+  </p>
+</div>
+{% elif not enviado %}
+<div class="input-group mb-3">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">Pedí de tarjeta ITBANK</div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %} {{form.as_p}}
+          <div class="d-grid gap-2">
+            <button class="btn btn-info" type="submit" value="Submite">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% elif not flag %}
+<p>
+  Disculpe {{enviado}}, su tipo de cuenta no puede solicitar este tipo de tarjeta.
+</p>
+
+{% endif %} {% endblock %}

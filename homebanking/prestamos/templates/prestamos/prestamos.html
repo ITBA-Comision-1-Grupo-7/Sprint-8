@@ -1,0 +1,37 @@
+{% extends 'utils/base.html' %} {% load static %} {% block styles %}
+<link rel="stylesheet" href="{% static 'prestamos/css/styles.css' %}" />
+{%endblock %} {%block content %} {% if enviado and flag %}
+<div class="col-lg-8 col-md-10 mx-auto">
+  <p><b>Gracias {{enviado}} !</b></p>
+  <p>
+    <b
+      >Tu prestamo fue solicitado correctamente, en breve nos pondremos en
+      contacto</b
+    >
+  </p>
+</div>
+{% elif not enviado %}
+<div class="input-group mb-3">
+  <div class="container">
+    <div class="card">
+      <div class="card-header">Peticion de pre-prestamo</div>
+      <div class="card-body">
+        <form method="POST">
+          {% csrf_token %} {{form.as_p}}
+          <div class="d-grid gap-2">
+            <button class="btn btn-info" type="submit" value="Submite">
+              Enviar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% elif not flag %}
+<p>
+  Su tipo de cuenta no tiene limite de prestamo suficiente para realizar esta
+  acción
+</p>
+
+{% endif %} {% endblock %}

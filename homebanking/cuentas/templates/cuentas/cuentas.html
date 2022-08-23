@@ -1,0 +1,144 @@
+{% extends 'utils/base.html' %}
+{% load static %}
+{% block styles %}
+<link rel="stylesheet" href="{%static 'cuentas/css/styles.css' %}" />
+<script src="https://kit.fontawesome.com/409333c207.js" crossorigin="anonymous"></script>
+{% endblock %} 
+{% block title %} Estado de Cuenta {% endblock %}
+{% block content %}
+<div class="container">
+  <div id="front-titulo">Estado de cuentas</div>
+  <hr />
+  <div class="container text-center" style="background-color:#eee;border-radius:20px">
+    <div class="row">
+      <div class="col">
+        <h4>Cuenta</h4>
+        <div class="row">Cliente: <div class="col" style="font-weight:bold;font-size:18px;text-align:right">{{ Cliente.nombreCompleto }}</div></div>
+        <div class="row">Tipo de cuenta: <div class="col" style="font-weight:bold;font-size:18px;text-align:right">{{Cliente.tipoCuenta}}</div></div>
+
+        <hr>
+        <div class="row">
+          Saldo:
+          <div class="col" id="saldo" style="font-weight:bold;font-size:18px">{{Cliente.balancef}}</div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="col" id="titulo">Tarjetas</div>
+        <div class="row">
+          <div class="col">
+            {%if Cliente.tcc%}
+            {% load static %}
+            <img src="{% static 'cuentas/img/classic.png' %}" style="height: 220px"/>
+            {% endif %}
+            {%if Cliente.tcg%}
+            {% load static %}
+            <img src="{% static 'cuentas/img/gold.png' %}" style="height: 220px"/>
+            {% endif %}
+            {%if Cliente.tcb%}
+            {% load static %}
+            <img src="{% static 'cuentas/img/black.png' %}" style="height: 220px"/>
+            {% endif %}
+            <div class="row"><div class="col" id="tarjetaLast">Tarjeta terminada en: {{Cliente.tarjetaUlt}}</div></div>
+            <hr />
+            <div class="row">
+              <div class="col">
+                <img src="{% static 'cuentas/img/consulta.png' %}" style="height: 60px" />
+              </div>
+              <div class="col">
+                <img
+                  src="{% static 'cuentas/img/ultimoscons.png' %}"
+                  style="height: 60px"
+                />
+              </div>
+              <div class="col">
+                <img src="{% static 'cuentas/img/congelar.png' %}" style="height: 60px" />
+              </div>
+              <div class="col">
+                <img src="{% static 'cuentas/img/pagar.png' %}" style="height: 60px" />
+              </div>
+            </div>
+          
+            <div class="row">
+              <div class="col">Consultar resumen</div>
+              <div class="col">Ultimos consumos</div>
+              <div class="col">Congelar tarjeta</div>
+              <div class="col">Pagar</div>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <br />
+  <br />
+  <br />
+  <hr class="rounded" />
+
+  <!--flor :) -->
+  <div class="container my-2" style="text-align: center;">
+    <h4 class="text-center fw-semibold" id="title_Seccion_Card">Qué nos hace diferentes</h4>
+    <br>
+    <br>
+    <div class="row row-cols-1 row-cols-md-4 g-4" >
+      <div class="col">
+        <div class="card h-100 border-light">
+          <div class="card-body">
+            <div style="text-align: center;" >
+              <img src="{% static 'cuentas/img/pago.png' %}" style="height: 50px" />
+              <hr>
+              <h4 style="margin-top: 0.25em;">PAGO SERVICIOS</h4>
+            </div>
+            <p class="card-text">Pago Facil</p>
+            <p class="card-text">Pago mis cuentas</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100 border-light">
+          <div class="card-body">
+            <div style="text-align: center;" >
+              <img src="{% static 'cuentas/img/investment.png' %}" style="height: 50px" />
+              <hr>
+              <h4 style="margin-top: 0.25em;">PLAZO FIJO</h4>
+            </div>
+            <h5 class="card-title text-center"></h5>
+            <p class="card-text">Plazo Fijo flexible</p>
+            <p class="card-text">Plazo Fijo estándar</p>
+            <p class="card-text">Inversiones</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100  border-light">
+          <div class="card-body ">
+            <div style="text-align: center;" >
+              <img src="{% static 'cuentas/img/loan.png' %}" style="height: 50px" />
+              <hr>
+              <h4 style="margin-top: 0.25em;">PRESTAMOS</h4>
+            </div>
+            <p class="card-text "> Para solicitar un prestamo <a class="text-decoration-none" href="{%url 'prestamos' %}"> <br> CLICK AQUI </a></p>
+            <p class="card-text">Asesoria ITBANK</p>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card h-100  border-light">
+          <div class="card-body">
+            <div style="text-align: center;" >
+              <img src="{% static 'cuentas/img/seguro.png' %}" style="height: 50px" />
+              <hr>
+              <h4 style="margin-top: 0.25em;">SEGUROS</h4>
+            </div>
+            <p class="card-text">Pago Facil</p>
+            <p class="card-text">Pago mis cuentas</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
