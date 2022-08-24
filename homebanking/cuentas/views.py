@@ -1,13 +1,21 @@
 from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from django.views.generic import ListView
-from django.views.generic.edit import CreateView
-from .models import Cliente
-from login.form import RegistroForm
 import sqlite3
-import os
 
-# Create your views here.
+class Cliente():
+   apellido = ''
+   nombre = ''
+   balance = 0
+   balancef = 0
+   tipoCuenta = ''
+   idCuenta=''
+   dni = ''
+   nombreCompleto = ''
+   tarjeta = ''
+   tarjetaUlt = ''
+   img = ''
+   tcc = False
+   tcg = False
+   tcb = False
 
 
 def Cuenta(request):
