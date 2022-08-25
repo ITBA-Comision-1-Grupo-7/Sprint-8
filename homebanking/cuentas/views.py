@@ -1,6 +1,12 @@
 from django.shortcuts import render
 import sqlite3
 
+
+
+
+
+
+
 class Cliente():
    apellido = ''
    nombre = ''
