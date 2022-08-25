@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'prestamos',
     'tarjetas',
     'utils',
+    'empleados',
     'api',
 ]
 

@@ -1,4 +1,5 @@
 from http import client
+from urllib import response
 from django.shortcuts import render
 from .serializers import SucursalesSerializer
 from .serializers import PrestamosSerializer
@@ -6,6 +7,8 @@ from .models import Sucursal
 from prestamos.models import Prestamos 
 from cuentas.models import Cuenta
 from clientes.models import Cliente
+from empleados.models import Empleado
+from datetime import date
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
@@ -52,4 +55,22 @@ class PrestamoSucursalList(APIView):
                 return Response(serializer.data, status=status.HTTP_200_OK)
         except:
             return Response('Algo fallo', status=status.HTTP_400_BAD_REQUEST)
-            
+
+class Create_prestamo(APIView):
+    def post(self, request):
+      try: 
+        username = request.user
+        if Empleado.objects.filter(employee_dni = username.username):
+           serializer = PrestamosSerializer(data = request.data)
+        if serializer.is_valid():
+          serializer.save()
+        else: 
+            return Response('Datos incorrectos', status=status.HTTP_400_BAD_REQUEST)
+        cliente = Cliente.objects.filter(customer_DNI = request.data['dni']).first()
+        clienteId = cliente.customer_id
+        cuenta = Cuenta.objects.filter(customer_id = clienteId).first()
+        cuenta.balance += int(request.data['valor'])
+        cuenta.save()
+        return Response(serializer.data)
+      except: 
+        return Response('Fallo')         
