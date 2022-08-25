@@ -3,6 +3,7 @@ from urllib import response
 from django.shortcuts import render
 from .serializers import SucursalesSerializer
 from .serializers import PrestamosSerializer
+from .serializers import SaldoSerializer
 from .models import Sucursal
 from prestamos.models import Prestamos 
 from cuentas.models import Cuenta
@@ -13,8 +14,13 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-# importamos serializador y modelo
-# Create your views here.
+
+
+
+
+
+
+
 
 
 class SucursalesLists(APIView):
@@ -56,6 +62,7 @@ class PrestamoSucursalList(APIView):
         except:
             return Response('Algo fallo', status=status.HTTP_400_BAD_REQUEST)
 
+<<<<<<< HEAD
 class Create_prestamo(APIView):
     def post(self, request):
       try: 
@@ -74,3 +81,20 @@ class Create_prestamo(APIView):
         return Response(serializer.data)
       except: 
         return Response('Fallo')         
+=======
+
+
+
+class SaldoDetails(APIView):
+    def get(self, request, pk):
+        #Buscamos el prestamos del cliente
+        try: 
+            #Buscamos el cliente para buscar su cuenta
+            saldo = Cliente.objects.filter(customer_DNI = pk).first()
+            clienteId = saldo.customer_id
+            cuenta = Cuenta.objects.filter(customer_id = clienteId).first()
+            return Response(cuenta.balance, status=status.HTTP_204_NO_CONTENT)
+        except: 
+            return Response('Algo fallo', status=status.HTTP_400_BAD_REQUEST)
+            
+>>>>>>> main
