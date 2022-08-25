@@ -15,7 +15,6 @@ class ClienteDetails(APIView):
     permission_classes = [permissions.IsAuthenticated]
     def get(self, request, cliente_id):
         username = request.user
-        
         elUser = User.objects.filter(username = username).first()
         
         if (elUser.is_staff or username.username == str(cliente_id)):

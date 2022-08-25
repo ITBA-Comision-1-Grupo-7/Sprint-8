@@ -40,9 +40,6 @@ urlpatterns = [
     path('cuentas/', views.Cuenta, name= "cuentas"),
     path('api/', api_views.SucursalesLists.as_view(), name= "api_sucursales"),
     path('api/<int:cliente_id>/', cliente_views.ClienteDetails.as_view(), name= "api_cliente_details"),
+    path('api/prestamo/', api_views.Create_prestamo.as_view(), name= "api_create_prestamo"),
     path('api/saldo/<int:pk>/', cuentas_views.SaldoDetails.as_view(), name="api_saldo_details"),
-    
-
-
-
 ]
