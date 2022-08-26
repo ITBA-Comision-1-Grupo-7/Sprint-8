@@ -1,7 +1,7 @@
 from http import client
 from urllib import response
 from django.shortcuts import render
-from .serializers import SucursalesSerializer
+from .serializers import PrestamosRetSerializer, SucursalesSerializer
 from .serializers import PrestamosSerializer
 from .serializers import SaldoSerializer
 from .models import Sucursal
@@ -144,10 +144,12 @@ class PrestamosRetrieve(APIView):
     def get(self, request, reqDNI):
         try:
             Presta = Prestamos.objects.filter(dni = reqDNI).all()
-            if Presta=='':
-                return Response('No hay prestamos sobre este cliente', status=status.HTTP_204_NO_CONTENT)
+            if not Presta:
+                return Response('No hay prestamos sobre este cliente', status=status.HTTP_200_OK)
             else:
-                serializer = PrestamosSerializer(Presta,many=True)
-                return Response(serializer.data,status=status.HTTP_200_OK)
+                montoPrestamo = sum(i.valor for i in Presta.valor)
+                serializer = PrestamosRetSerializer(Presta,many=True)
+                respuesta = [serializer.data, montoPrestamo]
+                return Response(respuesta,status=status.HTTP_200_OK)
         except: 
             return Response('Algo falló', status=status.HTTP_400_BAD_REQUEST)
