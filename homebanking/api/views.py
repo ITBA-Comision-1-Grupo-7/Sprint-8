@@ -14,6 +14,17 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+#KaruCosas
+from .serializers import ClienteSerializer
+from .serializers import TarjetaSerializer
+from .serializers import DireccionSerializer
+from .models import Cliente
+from .models import Tarjeta
+from .models import Direccion
+from .models import Empleado
+from rest_framework import permissions
+from .permissions import esEmpleado
+from .permissions import EmpleadoOCliente
 
 class SucursalesLists(APIView):
     def get(self, request):
@@ -58,7 +69,6 @@ class PrestamoSucursalList(APIView):
             return Response('Algo fallo', status=status.HTTP_400_BAD_REQUEST)
 
 
-
 class Create_prestamo(APIView):
     def post(self, request):
         try:
@@ -80,7 +90,6 @@ class Create_prestamo(APIView):
             return Response('Fallo')
 
 
-
 class SaldoDetails(APIView):
     def get(self, request, pk):
         # Buscamos el prestamos del cliente
@@ -92,4 +101,41 @@ class SaldoDetails(APIView):
             return Response(cuenta.balance, status=status.HTTP_204_NO_CONTENT)
         except:
             return Response('Algo fallo', status=status.HTTP_400_BAD_REQUEST)
-            
+
+
+#KaruCosas
+class TarjetasDeCliente(APIView):
+    permission_classes = [permissions.IsAuthenticated, esEmpleado]
+
+    def get(self, request, customer_dni):
+
+        cliente = Cliente.objects.filter(customer_dni = customer_dni).values().first()
+        customer_id = cliente['customer_id']
+        tarjetas = Tarjeta.objects.filter(customer_id=customer_id)
+        if tarjetas:
+            serializer = TarjetaSerializer(tarjetas,many=True)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response("no tiene tarjetas asociadas", status=status.HTTP_200_OK)
+
+class CambiarDireccionCliente(APIView):
+    permission_classes = [permissions.IsAuthenticated, EmpleadoOCliente]
+    
+    def put(self, request, customer_dni):
+        cliente = Cliente.objects.filter(customer_dni = customer_dni).values().first()
+        if cliente:
+            if cliente['customer_dni'] == request.user.username or Empleado.objects.filter(employee_dni = request.user.username):
+                customer_id = cliente['customer_id']
+                direccion = Direccion.objects.filter(customer_id = customer_id).first()
+                if direccion:
+                    serializer = DireccionSerializer(direccion, data=request.data)
+                    if serializer.is_valid():
+                        serializer.save()
+                        return Response(serializer.data)
+                    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    return Response("No existe esa direccion", status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response("Esta no es su informacion. Como cliente no puede acceder a ella a menos que sea su info.", status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response("no existe un cliente con ese DNI", status=status.HTTP_404_NOT_FOUND)
