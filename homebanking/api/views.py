@@ -149,7 +149,7 @@ class PrestamosRetrieve(APIView):
             else:
                 montoPrestamo = sum(i.valor for i in Presta.valor)
                 serializer = PrestamosRetSerializer(Presta,many=True)
-                respuesta = [serializer.data, montoPrestamo]
+                respuesta = [serializer.data, 'Monto total: ', montoPrestamo]
                 return Response(respuesta,status=status.HTTP_200_OK)
         except: 
             return Response('Algo falló', status=status.HTTP_400_BAD_REQUEST)
