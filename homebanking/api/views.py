@@ -139,3 +139,15 @@ class CambiarDireccionCliente(APIView):
                 return Response("Esta no es su informacion. Como cliente no puede acceder a ella a menos que sea su info.", status=status.HTTP_404_NOT_FOUND)
         else:
             return Response("no existe un cliente con ese DNI", status=status.HTTP_404_NOT_FOUND)
+
+class PrestamosRetrieve(APIView):
+    def get(self, request, reqDNI):
+        try:
+            Presta = Prestamos.objects.filter(dni = reqDNI).all()
+            if Presta=='':
+                return Response('No hay prestamos sobre este cliente', status=status.HTTP_204_NO_CONTENT)
+            else:
+                serializer = PrestamosSerializer(Presta,many=True)
+                return Response(serializer.data,status=status.HTTP_200_OK)
+        except: 
+            return Response('Algo falló', status=status.HTTP_400_BAD_REQUEST)
