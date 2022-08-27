@@ -14,7 +14,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-#KaruCosas
+# KaruCosas
 from .serializers import ClienteSerializer
 from .serializers import TarjetaSerializer
 from .serializers import DireccionSerializer
@@ -92,18 +92,25 @@ class Create_prestamo(APIView):
 
 class SaldoDetails(APIView):
     def get(self, request, pk):
-        # Buscamos el prestamos del cliente
         try:
-            # Buscamos el cliente para buscar su cuenta
-            saldo = Cliente.objects.filter(customer_DNI=pk).first()
+            saldo = Cliente.objects.filter(customer_dni=pk).first()
             clienteId = saldo.customer_id
             cuenta = Cuenta.objects.filter(customer_id=clienteId).first()
-            return Response(cuenta.balance, status=status.HTTP_204_NO_CONTENT)
-        except:
-            return Response('Algo fallo', status=status.HTTP_400_BAD_REQUEST)
+            tipoc = cuenta.account_type_id
+            if tipoc == 1:
+                tipoc = "Su tipo de cuenta es CLASSIC"
+            elif tipoc == 2:
+                tipoc = "Su tipo de cuenta es GOLD"
+            elif tipoc == 3:
+                tipoc = "Su tipo de cuenta es BLACK"
+            message = f"{tipoc} y su saldo es:"
+            return Response({message:cuenta.balance}, status=status.HTTP_200_OK)       
+        except: 
+            return Response("Algo inesperado sucedio", status=status.HTTP_400_BAD_REQUEST)
+            #Para ver el saldo use este link http://127.0.0.1:8000/api/saldo/40597645/
 
 
-#KaruCosas
+# KaruCosas
 class TarjetasDeCliente(APIView):
     permission_classes = [permissions.IsAuthenticated, esEmpleado]
 
