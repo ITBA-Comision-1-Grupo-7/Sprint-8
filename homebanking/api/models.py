@@ -3,6 +3,7 @@ from django.db import models
 
 # Create your models here.
 class Sucursal(models.Model):
+    branch_id = models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='branch_id')
     branch_number = models.BinaryField()
     branch_name = models.TextField()
     branch_address_id = models.IntegerField()
