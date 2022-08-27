@@ -1,7 +1,7 @@
 from http import client
 from urllib import response
 from django.shortcuts import render
-from .serializers import SucursalesSerializer
+from .serializers import PrestamosRetSerializer, SucursalesSerializer
 from .serializers import PrestamosSerializer
 from .serializers import SaldoSerializer
 from .models import Sucursal
@@ -139,3 +139,17 @@ class CambiarDireccionCliente(APIView):
                 return Response("Esta no es su informacion. Como cliente no puede acceder a ella a menos que sea su info.", status=status.HTTP_404_NOT_FOUND)
         else:
             return Response("no existe un cliente con ese DNI", status=status.HTTP_404_NOT_FOUND)
+
+class PrestamosRetrieve(APIView):
+    def get(self, request, reqDNI):
+        try:
+            Presta = Prestamos.objects.filter(dni = reqDNI).all()
+            if not Presta:
+                return Response('No hay prestamos sobre este cliente', status=status.HTTP_200_OK)
+            else:
+                montoPrestamo = sum(i.valor for i in Presta.valor)
+                serializer = PrestamosRetSerializer(Presta,many=True)
+                respuesta = [serializer.data, 'Monto total: ', montoPrestamo]
+                return Response(respuesta,status=status.HTTP_200_OK)
+        except: 
+            return Response('Algo falló', status=status.HTTP_400_BAD_REQUEST)
