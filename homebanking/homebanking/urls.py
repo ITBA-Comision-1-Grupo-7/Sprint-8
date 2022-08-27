@@ -27,6 +27,6 @@ urlpatterns = [
     path('api/<int:cliente_id>/', cliente_views.ClienteDetails.as_view(), name= "api_cliente_details"),
     path('api/prestamo/', api_views.Create_prestamo.as_view(), name= "api_create_prestamo"),
     path('api/saldo/<int:pk>/', api_views.SaldoDetails.as_view(), name="api_saldo_details"),
-    # path('api/cliente/<int:customer_dni>/',api_views.TarjetasDeCliente.as_view(), name="api_cliente_tarjetas"),
-    # path('api/cliente/direccion/<int:customer_dni>/',api_views.CambiarDireccionCliente.as_view(), name="api_cliente_direccion"),
+    path('api/cliente/<int:customer_dni>/',api_views.TarjetasDeCliente.as_view(), name="api_cliente_tarjetas"),
+    path('api/cliente/direccion/<int:customer_dni>/',api_views.CambiarDireccionCliente.as_view(), name="api_cliente_direccion"),
 ]
