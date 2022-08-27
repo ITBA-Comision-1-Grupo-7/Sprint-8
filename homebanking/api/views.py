@@ -1,7 +1,7 @@
 from http import client
 from urllib import response
 from django.shortcuts import render
-from .serializers import PrestamosRetSerializer, SucursalesSerializer
+from .serializers import SucursalesSerializer
 from .serializers import PrestamosSerializer
 from .serializers import SaldoSerializer
 from .models import Sucursal
@@ -35,7 +35,7 @@ class SucursalesLists(APIView):
         return Response(serializer.errors, status=status.HTTP_404_NOT_FOUND)
 
 
-class Prestamos(APIView):
+class DelPrestamos(APIView):
     def delete(self, request, pk):
         # Buscamos el prestamos del cliente
         try:
@@ -142,14 +142,15 @@ class CambiarDireccionCliente(APIView):
 
 class PrestamosRetrieve(APIView):
     def get(self, request, reqDNI):
-        try:
-            Presta = Prestamos.objects.filter(dni = reqDNI).all()
-            if not Presta:
-                return Response('No hay prestamos sobre este cliente', status=status.HTTP_200_OK)
+        try: 
+            presta = Prestamos.objects.filter(dni = str(reqDNI)).all()
+            if not presta:
+                return Response('No hay prestamos sobre este cliente', status=status.HTTP_404_NOT_FOUND)
             else:
-                montoPrestamo = sum(i.valor for i in Presta.valor)
-                serializer = PrestamosRetSerializer(Presta,many=True)
-                respuesta = [serializer.data, 'Monto total: ', montoPrestamo]
-                return Response(respuesta,status=status.HTTP_200_OK)
+                montoPrestamo = 0
+                for i in presta:
+                    montoPrestamo += i.valor
+                serializer = PrestamosSerializer(presta,many=True)
+                return Response({'Monto Total ': montoPrestamo},status=status.HTTP_200_OK)
         except: 
             return Response('Algo falló', status=status.HTTP_400_BAD_REQUEST)

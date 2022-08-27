@@ -29,4 +29,5 @@ urlpatterns = [
     path('api/saldo/<int:pk>/', api_views.SaldoDetails.as_view(), name="api_saldo_details"),
     path('api/cliente/<int:customer_dni>/',api_views.TarjetasDeCliente.as_view(), name="api_cliente_tarjetas"),
     path('api/cliente/direccion/<int:customer_dni>/',api_views.CambiarDireccionCliente.as_view(), name="api_cliente_direccion"),
+    path('api/prestamo/cliente/<int:reqDNI>/',api_views.PrestamosRetrieve.as_view(), name="api_monto_prestamo_cliente")
 ]
