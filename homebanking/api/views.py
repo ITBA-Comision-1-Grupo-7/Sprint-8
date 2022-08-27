@@ -92,9 +92,7 @@ class Create_prestamo(APIView):
 
 class SaldoDetails(APIView):
     def get(self, request, pk):
-        # Buscamos el prestamos del cliente
         try:
-            # Buscamos el cliente para buscar su cuenta
             saldo = Cliente.objects.filter(customer_DNI=pk).first()
             clienteId = saldo.customer_id
             cuenta = Cuenta.objects.filter(customer_id=clienteId).first()
